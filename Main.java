@@ -6,20 +6,16 @@ public class Main {
 
         System.out.println("Welcome to Palindrome Checker App");
 
-        // Take input from user
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter a word: ");
         String original = scanner.nextLine();
 
-        // Reverse string using loop
-        String reversed = "";
+        // Using StringBuilder to reverse
+        StringBuilder builder = new StringBuilder(original);
+        String reversed = builder.reverse().toString();
 
-        for(int i = original.length() - 1; i >= 0; i--) {
-            reversed = reversed + original.charAt(i);
-        }
-
-        // Compare original and reversed
+        // Compare strings
         if(original.equals(reversed)) {
             System.out.println(original + " is a palindrome");
         } else {
