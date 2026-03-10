@@ -1,9 +1,8 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Scanner;
-import java.util.Stack;
 
-public class Main {
+public class UC7DequePalindrome {
 
     public static void main(String[] args) {
 
@@ -12,25 +11,22 @@ public class Main {
         System.out.println("Enter a word:");
         String input = scanner.nextLine();
 
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Add characters to queue and stack
+        // Insert characters into deque
         for (int i = 0; i < input.length(); i++) {
-            char ch = input.charAt(i);
-            queue.add(ch);   // enqueue
-            stack.push(ch);  // push
+            deque.addLast(input.charAt(i));
         }
 
         boolean isPalindrome = true;
 
-        // Compare dequeue and pop
-        while (!queue.isEmpty()) {
+        // Compare front and rear characters
+        while (deque.size() > 1) {
 
-            char qChar = queue.remove(); // dequeue
-            char sChar = stack.pop();    // pop
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
 
-            if (qChar != sChar) {
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
