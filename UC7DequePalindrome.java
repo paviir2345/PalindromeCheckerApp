@@ -1,8 +1,65 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Scanner;
 
-public class UC7DequePalindrome {
+class Node {
+    char data;
+    Node next;
+
+    Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class UC8LinkedListPalindrome {
+
+    // Function to reverse linked list
+    public static Node reverse(Node head) {
+        Node prev = null;
+        Node current = head;
+
+        while (current != null) {
+            Node nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+
+        return prev;
+    }
+
+    // Function to check palindrome
+    public static boolean isPalindrome(Node head) {
+
+        if (head == null || head.next == null)
+            return true;
+
+        Node slow = head;
+        Node fast = head;
+
+        // Find middle of linked list
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        Node secondHalf = reverse(slow);
+
+        Node firstHalf = head;
+
+        // Compare halves
+        while (secondHalf != null) {
+
+            if (firstHalf.data != secondHalf.data) {
+                return false;
+            }
+
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+
+        return true;
+    }
 
     public static void main(String[] args) {
 
@@ -11,28 +68,24 @@ public class UC7DequePalindrome {
         System.out.println("Enter a word:");
         String input = scanner.nextLine();
 
-        Deque<Character> deque = new ArrayDeque<>();
+        Node head = null;
+        Node tail = null;
 
-        // Insert characters into deque
-        for (int i = 0; i < input.length(); i++) {
-            deque.addLast(input.charAt(i));
-        }
+        // Convert string to linked list
+        for (char c : input.toCharArray()) {
 
-        boolean isPalindrome = true;
+            Node newNode = new Node(c);
 
-        // Compare front and rear characters
-        while (deque.size() > 1) {
-
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-
-            if (front != rear) {
-                isPalindrome = false;
-                break;
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
             }
         }
 
-        if (isPalindrome) {
+        if (isPalindrome(head)) {
             System.out.println("The word is a Palindrome");
         } else {
             System.out.println("The word is NOT a Palindrome");
