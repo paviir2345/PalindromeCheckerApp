@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -5,32 +7,39 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Palindrome Checker using Stack");
-
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter a word: ");
-        String original = scanner.nextLine();
+        System.out.println("Enter a word:");
+        String input = scanner.nextLine();
 
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
-        // Push characters
-        for (int i = 0; i < original.length(); i++) {
-            stack.push(original.charAt(i));
+        // Add characters to queue and stack
+        for (int i = 0; i < input.length(); i++) {
+            char ch = input.charAt(i);
+            queue.add(ch);   // enqueue
+            stack.push(ch);  // push
         }
 
-        // Pop characters to reverse
-        String reversed = "";
+        boolean isPalindrome = true;
 
-        while (!stack.isEmpty()) {
-            reversed += stack.pop();
+        // Compare dequeue and pop
+        while (!queue.isEmpty()) {
+
+            char qChar = queue.remove(); // dequeue
+            char sChar = stack.pop();    // pop
+
+            if (qChar != sChar) {
+                isPalindrome = false;
+                break;
+            }
         }
 
-        // Compare
-        if (original.equals(reversed)) {
-            System.out.println("Palindrome");
+        if (isPalindrome) {
+            System.out.println("The word is a Palindrome");
         } else {
-            System.out.println("Not Palindrome");
+            System.out.println("The word is NOT a Palindrome");
         }
 
         scanner.close();
